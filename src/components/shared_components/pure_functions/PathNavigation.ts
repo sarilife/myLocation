@@ -14,21 +14,14 @@ export const navigation = () => ({
     },
 })
 
-// export const hideFor = (paths: string | string[]) => {
-//     return !paths.includes(location.pathname)
-// }
+export function getJsonFromUrl(url:string) {
+    if(!url) url = window.location.search;
+    let query:string = url.substr(1);
+    let result:any = {};
+    query.split("&").forEach(function(part:string) {
+      let item:any = part.split("=");
+      result[item[0]] = decodeURIComponent(item[1]);
+    });
+    return result;
+  }
 
-export function isMobile() {
-    var iOS = /iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-    return iOS || document.documentElement?.clientWidth < 420
-}
-
-export function getParam(param: string){
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get(param);
-}
-
-export function insertParam(key: any, value: any) {
-    const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + `?${key}=${value}`;
-    window.history.pushState({path:newurl},'',newurl);
-}
